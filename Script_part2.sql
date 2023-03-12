@@ -7,6 +7,8 @@
 #город нахождения магазина;
 #количество пользователей, закреплённых в этом магазине.
 
+#Вариант 1
+
 SELECT  CONCAT(s.last_name, ' ', s.first_name) AS staff_name, ca.city, cc.count_customer 
 FROM staff s
 INNER JOIN 
@@ -31,6 +33,16 @@ SELECT COUNT(store_id) count_customer, store_id
 FROM customer 
 GROUP BY store_id;
 
+#Вариант 2
+
+SELECT  CONCAT(s.last_name, ' ', s.first_name) AS staff_name, c.city, COUNT(customer.customer_id)
+FROM staff s
+INNER JOIN address a ON  a.address_id = s.address_id 
+INNER JOIN city c  ON  a.city_id  = c.city_id  
+INNER JOIN store ON store.store_id = s.store_id
+INNER JOIN customer  ON store.store_id = customer.store_id
+GROUP BY staff_id 
+HAVING  COUNT(customer.customer_id) > 300; 
 
 
 ###Задание 2###
@@ -64,6 +76,8 @@ GROUP BY MONTHNAME(rental_date)) t2
 ON t1.sum_month = t2.sum_month
 ORDER BY t1.sum_amount DESC
 LIMIT 1;
+
+# Подзапросы
 
 
 SELECT  MONTH(payment_date) as sum_month,  SUM(amount) as sum_amount_pay

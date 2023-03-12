@@ -19,6 +19,8 @@
 
 ### *<a name ="1">Ответ к Заданию 1</a>*
 
+Вариант 1
+
 ```sql
 SELECT  CONCAT(s.last_name, ' ', s.first_name) AS staff_name, ca.city, cc.count_customer 
 FROM staff s
@@ -35,8 +37,22 @@ INNER JOIN
 ON cc.store_id = s.store_id
 WHERE cc.count_customer > 300; 
 ```
-![task1](img/Screenshot_2023-03-12_22-40-23.png)
+![task1-v1](img/Screenshot_2023-03-12_22-40-23.png)
 
+Вариант 2
+
+```sql
+SELECT  CONCAT(s.last_name, ' ', s.first_name) AS staff_name, c.city, COUNT(customer.customer_id)
+FROM staff s
+INNER JOIN address a ON  a.address_id = s.address_id 
+INNER JOIN city c  ON  a.city_id  = c.city_id  
+INNER JOIN store ON store.store_id = s.store_id
+INNER JOIN customer  ON store.store_id = customer.store_id
+GROUP BY staff_id 
+HAVING  COUNT(customer.customer_id) > 300; 
+```
+
+![task1-v2](img/Screenshot_2023-03-13_01-49-06.png)
 
 ---
 
