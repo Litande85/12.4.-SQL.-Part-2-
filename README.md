@@ -19,7 +19,7 @@
 
 ### *<a name ="1">Ответ к Заданию 1</a>*
 
-Вариант 1
+### Вариант 1 Задания 1
 
 ```sql
 SELECT  CONCAT(s.last_name, ' ', s.first_name) AS staff_name, ca.city, cc.count_customer 
@@ -39,7 +39,7 @@ WHERE cc.count_customer > 300;
 ```
 ![task1-v1](img/Screenshot_2023-03-12_22-40-23.png)
 
-Вариант 2
+### Вариант 2 Задания 1
 
 ```sql
 SELECT  CONCAT(s.last_name, ' ', s.first_name) AS staff_name, c.city, COUNT(customer.customer_id)
