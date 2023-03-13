@@ -66,13 +66,13 @@ SET lc_time_names = 'en_US'
 
 SELECT t1.sum_month as 'месяц с наибольшей суммой платежей', t1.sum_amount, t2.sum_rental  
 FROM 
-(SELECT  MONTHNAME(payment_date) as sum_month,  SUM(amount) as sum_amount
+(SELECT  DATE_FORMAT(payment_date, '%M %Y') as sum_month,  SUM(amount) as sum_amount
 FROM payment
-GROUP BY MONTHNAME(payment_date)) t1
+GROUP BY MDATE_FORMAT(payment_date, '%M %Y')) t1
 JOIN 
-(SELECT  MONTHNAME(rental_date) as sum_month,  COUNT(rental_id)  as sum_rental
+(SELECT  DATE_FORMAT(rental_date, '%M %Y') as sum_month,  COUNT(rental_id)  as sum_rental
 FROM rental 
-GROUP BY MONTHNAME(rental_date)) t2
+GROUP BY DATE_FORMAT(rental_date, '%M %Y')) t2
 ON t1.sum_month = t2.sum_month
 ORDER BY t1.sum_amount DESC
 LIMIT 1;
@@ -80,19 +80,19 @@ LIMIT 1;
 # Подзапросы
 
 
-SELECT  MONTH(payment_date) as sum_month,  SUM(amount) as sum_amount_pay
+SELECT DATE_FORMAT(payment_date, '%M %Y') as sum_month,  SUM(amount) as sum_amount_pay
 FROM payment
-GROUP BY MONTH(payment_date);
+GROUP BY DATE_FORMAT(payment_date, '%M %Y');
 
-SELECT  MONTH(rental_date) as sum_month,  COUNT(rental_id)  as sum_rental
+SELECT  DATE_FORMAT(rental_date, '%M %Y') as sum_month,  COUNT(rental_id)  as sum_rental
 FROM rental 
-GROUP BY MONTH(rental_date);
+GROUP BY DATE_FORMAT(rental_date, '%M %Y');
 
 ### Упрощенный вариант задания 3
 
-SELECT MONTHNAME(payment_date) as 'месяц с наибольшей суммой платежей', SUM(amount), COUNT(rental_id)
+SELECT DATE_FORMAT(payment_date, '%M %Y') as 'месяц с наибольшей суммой платежей', SUM(amount), COUNT(rental_id)
 FROM payment  
-GROUP BY MONTHNAME(payment_date)
+GROUP BY DATE_FORMAT(payment_date, '%M %Y')
 ORDER BY SUM(amount) DESC
 limit 1;
 
